@@ -13,9 +13,9 @@ then
 fi
 
 # Add the Neuro-Debian repo to our own.
-#wget -O- http://neuro.debian.net/lists/quantal.us-nh | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
-#sudo apt-key adv --recv-keys --keyserver pgp.mit.edu 2649A5A9
-#sudo apt-get update > out_update_apt.txt
+wget -O- http://neuro.debian.net/lists/quantal.us-nh | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
+sudo apt-key adv --recv-keys --keyserver pgp.mit.edu 2649A5A9
+sudo apt-get update > out_update_apt.txt
 
 # C++ building
 echo 
@@ -102,7 +102,7 @@ then
 
 	wget -c -O /tmp/freesurfer-Linux-centos6_x86_64-stable-pub-v5.2.0.tar.gz ftp://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/5.2.0/freesurfer-Linux-centos6_x86_64-stable-pub-v5.2.0.tar.gz
 	cd /tmp/
-	tar -xfz freesurfer-Linux-centos6_x86_64-stable-pub-v5.2.0.tar.gz
+	tar -xzf freesurfer-Linux-centos6_x86_64-stable-pub-v5.2.0.tar.gz
 	sudo mv freesurfer/ /usr/local/
 
 	# Get the licence
@@ -111,7 +111,7 @@ then
 	cd temp/
 	wget https://dl.dropbox.com/u/53085014/utils/fs_licence
 	mv fs_licence /usr/local/freesurfer/.license
-	cd ..
+    cd ..
 	rm -r -f temp/
 fi
 
@@ -194,15 +194,22 @@ then
 fi
 
 # If we reach the end of the script, we can delete temporary files.
+# We won't delete them, we'll tell the user to do it.
 if [[ $3 == 1 ]]
 then
-	rm -f /tmp/brainvisa-Mandriva-2008.0-x86_64-4.3.0-2012_09_03.tar.bz2
+    echo
+    echo "-  If installation was completed, you can delete"
+    echo "   /tmp/brainvisa-Mandriva-2008.0-x86_64-4.3.0-2012_09_03.tar.bz2"
+    echo "   or you can keep it if you think you will need to reinstall later."
 fi
 
 # Remove Freesurfer archive
 if [[ $4 == 1 ]]
 then
-	rm -f /tmp/freesurfer-Linux-centos6_x86_64-stable-pub-v5.2.0.tar.gz
+    echo
+    echo "-  If installation was completed, you can delete"
+    echo "   /tmp/freesurfer-Linux-centos6_x86_64-stable-pub-v5.2.0.tar.gz"
+    echo "   or you can keep it if you think you will need to reinstall later."
 fi
 
 # General warning
