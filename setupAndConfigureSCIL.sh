@@ -59,18 +59,11 @@ then
 
     mkdir temp
     cd temp
-    wget https://dl.dropbox.com/u/53085014/utils/mrtrix-0.2.10_2012-02-10.tar.bz2
-    tar -xvjf mrtrix-0.2.10_2012-02-10.tar.bz2
-    
-    # Get the patch files
-    wget https://dl.dropbox.com/u/53085014/utils/patch_select_cmdline
-    patch mrtrix-0.2.10/lib/file/dicom/select_cmdline.cpp patch_select_cmdline
-
-    wget https://dl.dropbox.com/u/53085014/utils/patch_mrtrix_h
-    patch mrtrix-0.2.10/lib/mrtrix.h patch_mrtrix_h
+    wget https://dl.dropbox.com/u/53085014/utils/mrtrix-0.2.11_2013-03-13.tar.bz2
+	tar -xvjf mrtrix-0.2.11_2013-03-13.tar.bz2
 
     # Build
-    cd mrtrix-0.2.10/
+    cd mrtrix-0.2.11/
     ./build
     sudo ./build install
 
