@@ -2,7 +2,7 @@
 # Usage
 # $1 Set to 1 if you want to install numpy, scipy and nibabel, 0 otherwise.
 # $2 Set to 1 if you want to install Mrtrix, 0 otherwise.
-if [[ $# -lt 2 ]]
+if [[ $# -lt 3 ]]
 then
     echo "Missing some params. Please read the header of the script."
     exit 1
@@ -71,7 +71,21 @@ then
     rm -rf temp
 fi
 
+# Brainvisa
+if [[ $3 == 1 ]]
+then
+	echo
+	echo "*************************"
+    echo "Downloading and installing the Brainvisa suite."
+    echo "*************************"
+    echo
 
+	# This download will be deleted only at the end of the script, to make sure the user does not need to re-download it if something fails.	
+	#wget -O /tmp/brainvisa-Mandriva-2008.0-x86_64-4.3.0-2012_09_03.tar.bz2 -c ftp://ftp.cea.fr/pub/dsv/anatomist/binary/brainvisa-Mandriva-2008.0-x86_64-4.3.0-2012_09_03.tar.bz2
+	#cd /tmp/
+	#tar -xvjf brainvisa-Mandriva-2008.0-x86_64-4.3.0-2012_09_03.tar.bz2
+	#sudo mv brainvisa-4.3.0/ /usr/local/
+fi
 
 
 echo
@@ -86,3 +100,27 @@ then
     echo "  in /etc/mrtrix.conf"
 fi
 
+if [[ $3 == 1 ]]
+then
+	echo
+	echo "- To be able to use Brainvisa / Anatomist when starting a new console, make"
+	echo "  sure to add the following lines to your .bashrc"
+	echo "    ###### Brainvisa ######"
+	echo "    export BRAINVISA=/usr/local/brainvisa-4.3.0/"
+	printf '    export PATH=$PATH:$BRAINVISA/bin'
+	echo
+fi
+
+# If we reach the end of the script, we can delete temporary files.
+if [[ $3 == 1 ]]
+then
+	rm -f /tmp/brainvisa-Mandriva-2008.0-x86_64-4.3.0-2012_09_03.tar.bz2
+fi
+
+# General warning
+echo "In some cases, if some apps (Brainvisa, Fibernavigator) crash when using display functions,"
+echo "try enabling the Nvidia closed source drivers."
+
+echo
+echo "Done"
+echo
