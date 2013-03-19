@@ -1,5 +1,7 @@
 #!/bin/bash
 # Usage
+# Note: needs to be run as sudo.
+#
 # $1 Set to 1 if you want to install numpy, scipy and nibabel, 0 otherwise.
 # $2 Set to 1 if you want to install Mrtrix, 0 otherwise.
 # $3 Set to 1 if you want to install the Brainvisa suite, 0 otherwise.
