@@ -23,7 +23,7 @@ echo "*************************"
 echo "Installing basic C++ compilation tools"
 echo "*************************"
 echo
-sudo apt-get install -y cmake cmake-data cmake-qt-gui
+sudo apt-get install -y cmake cmake-data cmake-qt-gui cmake-curses-gui
 sudo apt-get install -y g++ build-essential
 sudo apt-get install -y gfortran
 sudo apt-get install -y git
