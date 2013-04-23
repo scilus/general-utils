@@ -8,16 +8,24 @@
 # $4 Set to 1 if you want to install Freesurfer, 0 otherwise.
 # $5 Set to 1 if you want to install FSL 5.0, 0 otherwise.
 # $6 Set to 1 if you want to configure the Fibernavigator's dependencies, 0 otherwise.
-if [[ $# -lt 6 ]]
+# $7 Set to 1 if you want to install NLMEANS for denoising, 0 otherwise.
+if [[ $# -lt 7 ]]
 then
     echo "Missing some params. Please read the header of the script."
     exit 1
 fi
 
+if [[ $7 == 1 ]]
+then
+    install_nlmeans=true
+else
+    install_nlmeans=false
+fi
+
 # Add the Neuro-Debian repo to our own.
-wget -O- http://neuro.debian.net/lists/quantal.us-nh | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
-sudo apt-key adv --recv-keys --keyserver pgp.mit.edu 2649A5A9
-sudo apt-get update > out_update_apt.txt
+#wget -O- http://neuro.debian.net/lists/quantal.us-nh | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
+#sudo apt-key adv --recv-keys --keyserver pgp.mit.edu 2649A5A9
+#sudo apt-get update > out_update_apt.txt
 
 # C++ building
 echo 
@@ -139,7 +147,23 @@ then
     echo "*************************"
     echo
 	sudo apt-get install -y libwxbase2.8-dev libwxbase2.8-0 wx2.8-headers libwxgtk2.8-0 libwxgtk2.8-dev
-	sudo apt-get install -y libglew1.8 libglew-dev
+	sudo apt-get install -y libglew-dev
+fi
+
+# NLMEANS for denoising
+# Only works on Linux. If it fails and you are on a x86_64 machine, 
+# uncomment the following line to install dependencies that could 
+# solve the problem.
+# sudo apt-get install -y libc6-i386 libc6:i386 lib32stdc++6
+if [[ $install_nlmeans == true ]]
+then
+    mkdir temp
+    cd temp
+    wget https://dl.dropboxusercontent.com/u/53085014/utils/NLMEANS
+    sudo cp NLMEANS /usr/local/bin/
+    sudo chmod a+x /usr/local/bin/NLMEANS
+    cd ..
+    rm -rf temp
 fi
 
 # Help messages at the end of the script
@@ -193,6 +217,17 @@ then
 	echo "- The Fibernavigator's dependencies have been installed."
 	echo "  You will still need to checkout the code and compile it."
 	echo "  See https://github.com/scilus/fibernavigator"
+fi
+
+if [[ $install_nlmeans == true ]]
+then
+    echo
+    echo "- NLMEANS has been installed."
+    echo "  To use it to the maximum, don't forget to add "
+    echo "  the following lines to your .bashrc"
+    echo "    export VISTAL_SMP=7"
+    echo "  Where the number to use is the number of CPUs available,"
+    echo "  which can be seen in /proc/cpuinfo, at the last processor entry."
 fi
 
 # If we reach the end of the script, we can delete temporary files.
