@@ -23,9 +23,9 @@ else
 fi
 
 # Add the Neuro-Debian repo to our own.
-#wget -O- http://neuro.debian.net/lists/quantal.us-nh | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
-#sudo apt-key adv --recv-keys --keyserver pgp.mit.edu 2649A5A9
-#sudo apt-get update > out_update_apt.txt
+wget -O- http://neuro.debian.net/lists/quantal.us-nh | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
+sudo apt-key adv --recv-keys --keyserver pgp.mit.edu 2649A5A9
+sudo apt-get update > out_update_apt.txt
 
 # C++ building
 echo 
